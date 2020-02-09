@@ -1,6 +1,6 @@
 # USB Camera Streamer
 
-[https://gstreamer.freedesktop.org/](gstreamer) based pipeline for rendering raw webcam input trying to be as low overhead as possible and providing fine grained controls of parameters such as rendering latency and capture formats. 
+[gstreamer](https://gstreamer.freedesktop.org/) based pipeline for rendering raw webcam input trying to be as low overhead as possible and providing fine grained controls of parameters such as rendering latency and capture formats. 
 
 ## Hardware
 
