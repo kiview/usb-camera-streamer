@@ -2,13 +2,26 @@
 
 set -e  
 
-device_number=4
-delay_in_ms=1000
+delay_in_ms=$1
 
-delay_in_ns=$(expr 1000000 \* $delay_in_ms)
+if test -z $1 
+then
+  echo ERROR: Please specify a delay value in ms. 0 means no delay.
+  exit 1
+fi
 
-gst-launch-1.0 v4l2src device=/dev/video$device_number \
-! video/x-raw, format=UYVY, framerate=60/1, width=1920, height=1080 \
-! glimagesink sync=false rotate-method=horizontal-flip render-rectangle="<0,0,1920,1080>"
-# ! queue name=q min-threshold-time=$delay_in_ns max-size-buffers=0 max-size-bytes=0  \
+device_number=5
 
+if [ "$delay_in_ms" -eq "0" ]; then
+    gst-launch-1.0 v4l2src device=/dev/video$device_number io-mode=4 \
+    ! video/x-raw, format=UYVY, framerate=60/1, width=1920, height=1080 \
+    ! glimagesink sync=false brightness=-0.22 render-rectangle="<0,0,1920,1080>" rotate-method=horizontal-flip 
+else
+    delay_in_ns=$(expr 1000000 \* $delay_in_ms)
+    delay_max=$(expr 2 \* $delay_in_ns)
+
+    gst-launch-1.0 v4l2src device=/dev/video$device_number io-mode=4 \
+    ! video/x-raw, format=UYVY, framerate=60/1, width=1920, height=1080 \
+    ! queue name=q min-threshold-time=$delay_in_ns max-size-buffers=0 max-size-bytes=0 max-size-time=0 \
+    ! glimagesink sync=false brightness=-0.22 render-rectangle="<0,0,1920,1080>" rotate-method=horizontal-flip 
+fi
