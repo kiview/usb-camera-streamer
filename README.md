@@ -1,4 +1,6 @@
-# USB Camera Streamer
+# USB Camera Streamer 
+
+![Java CI with Maven](https://github.com/kiview/usb-camera-streamer/workflows/Java%20CI%20with%20Maven/badge.svg)
 
 [gstreamer](https://gstreamer.freedesktop.org/) based pipeline for rendering raw webcam input trying to be as low overhead as possible and providing fine grained controls of parameters such as rendering latency and capture formats. 
 
