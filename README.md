@@ -6,10 +6,25 @@
 
 This script was written for a [See3CAM_CU135](https://www.e-consystems.com/4k-usb-camera.asp#Key-features) USB camera but should work with other devices if configured according to their specs.
 
+## Scripts
+
+You can find bash and powershell scripts under `/scripts`. Those create a pipeline using OpenGL.
+
+## JavaFX 
+
+Moving forward, this program will be maintained as a JavaFX application using [gst1-java-fx](https://github.com/gstreamer-java/gst1-java-fx).
+To build and run the program, execute:
+
+```
+$ mvn javafx:run
+```
+
+
+Note: JDK 13 and Maven need to be installed.
 
 ## Default Operation
 
-As a default, the gstreamer pipeline will configure the `v4l2src` webcam sink to UYVY 1080P@60FPS (which reguries a USB 3.0 connection).
+As a default, the gstreamer pipeline will configure the `v4l2src` webcam sink to UYVY 1080P@60FPS (which requires a USB 3.0 connection).
 
 ## Software Requirements
 
