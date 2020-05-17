@@ -47,6 +47,12 @@ public class CameraStreamer extends Application {
         primaryStage.show();
     }
 
+    @Override
+    public void stop() throws Exception {
+        pipeline.stop();
+        super.stop();
+    }
+
     private void initPipeline() {
         String pipelineDescription = buildPipelineDescription();
         System.out.println(pipelineDescription);
@@ -71,6 +77,9 @@ public class CameraStreamer extends Application {
                 "! video/x-raw, format=UYVY, width=%d, height=%d, framerate=%d/1 ";
         descriptionBuilder.append(String.format(webcamSource, WINDOW_WIDTH, WINDOW_HEIGHT, WEBCAM_FRAME_RATE));
 
+        String tee = "! tee name=t ! queue ";
+        descriptionBuilder.append(tee);
+
         String transformations =
                 "! videobalance saturation=0.0 " +
                 "! videoflip method=horizontal-flip " +
@@ -87,10 +96,15 @@ public class CameraStreamer extends Application {
             descriptionBuilder.append(queue);
         }
 
-        String sink =
+        String javaFxSink =
                 "! videoconvert " +
-                "! appsink name=sink";
-        descriptionBuilder.append(sink);
+                "! appsink name=sink ";
+        descriptionBuilder.append(javaFxSink);
+
+        String fileSink =
+                "t. ! queue " +
+                "! videoconvert ! x264enc tune=zerolatency ! flvmux ! filesink location=recording.flv";
+        descriptionBuilder.append(fileSink);
 
         return descriptionBuilder.toString();
     }
