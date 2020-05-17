@@ -14,11 +14,19 @@ You can find bash and powershell scripts under `/scripts`. Those create a pipeli
 
 ## JavaFX 
 
+### Building & Running
+
 Moving forward, this program will be maintained as a JavaFX application using [gst1-java-fx](https://github.com/gstreamer-java/gst1-java-fx).
 To build and run the program, execute:
 
 ```
 $ mvn javafx:run
+```
+
+### Running the provided JAR
+
+```
+$ java -jar usb-camera-streamer.jar --delay=500
 ```
 
 
