@@ -73,7 +73,7 @@ public class CameraStreamer extends Application {
         StringBuilder descriptionBuilder = new StringBuilder();
 
         String webcamSource =
-                "v4l2src device=/dev/video0 " +
+                "v4l2src device=/dev/video0 " + // TODO: Make video id configurable
                 "! video/x-raw, format=UYVY, width=%d, height=%d, framerate=%d/1 ";
         descriptionBuilder.append(String.format(webcamSource, WINDOW_WIDTH, WINDOW_HEIGHT, WEBCAM_FRAME_RATE));
 
@@ -83,9 +83,9 @@ public class CameraStreamer extends Application {
         String transformations =
                 "! videobalance saturation=0.0 " +
                 "! videoflip method=horizontal-flip " +
-                "! timeoverlay halignment=center valignment=center " +
+                "! timeoverlay halignment=center valignment=center " + // TODO: toggle by CLI flag
                 "! videobox top=200 bottom=200 left=355 right=355 " + // TODO: make configurable
-                "! videoscale";
+                "! videoscale ";
         descriptionBuilder.append(transformations);
 
         if (getParameters().getNamed().containsKey("delay")) {
@@ -101,9 +101,15 @@ public class CameraStreamer extends Application {
                 "! appsink name=sink ";
         descriptionBuilder.append(javaFxSink);
 
+        // TODO: select by CLI argument
+        String cpuEncoding = "x264enc tune=zerolatency";
+        String gpuNvidiaEncoding = "nvh264enc ! h264parse";
+
+        String recordingFileName = System.currentTimeMillis() + ".flv";
         String fileSink =
                 "t. ! queue " +
-                "! videoconvert ! x264enc tune=zerolatency ! flvmux ! filesink location=recording.flv";
+                "! videoconvert ! " + gpuNvidiaEncoding + " ! flvmux ! filesink location=" + recordingFileName;
+
         descriptionBuilder.append(fileSink);
 
         return descriptionBuilder.toString();

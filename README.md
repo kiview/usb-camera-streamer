@@ -46,6 +46,13 @@ Tested on Ubuntu 18.04 and Fedora 31. In order to get a fullscreen rendered imag
 $ gst-inspect-1.0 glimagesink 
 ```
 
+## Support for NVIDIA GPU accelerated hardware encoding
+
+The encoding necessary for saving the video file will get a big performance and quality boost when using an NVIDIA GPU.
+For this to work, the `NVENC` gstreamer plugin needs to be installed. 
+This will probably mean downloading the NVIDIA SDK and compiling the plugin manually.
+There are detailed instructions on how to do it in [this great blog post](http://lifestyletransfer.com/how-to-install-nvidia-gstreamer-plugins-nvenc-nvdec-on-ubuntu/). 
+
 ## Appendix
 
 ### Camera
