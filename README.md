@@ -37,7 +37,7 @@ $ java -jar usb-camera-streamer.jar --delay=500
 All parameters are optional have sensible defaults.
 
 | Parameter        | Explanation     | default      | Example  |
-| ------------- |:-------------:| -----:|
+| -------------    |:-------------:  | -----:       |     :-------------:      |
 | delay      | delay of the mirrior image in ms | 0 | --delay=500 |
 | timeoverlay      | whether to display the timeoverlay for debugging      | off | --timeoverlay=true (any value will activate) |
 
