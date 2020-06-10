@@ -9,6 +9,7 @@ import javafx.stage.StageStyle;
 import org.freedesktop.gstreamer.Gst;
 import org.freedesktop.gstreamer.Pipeline;
 import org.freedesktop.gstreamer.elements.AppSink;
+import org.freedesktop.gstreamer.event.EOSEvent;
 import org.freedesktop.gstreamer.fx.FXImageSink;
 
 
@@ -25,7 +26,7 @@ public class CameraStreamer extends Application {
     private final ImageView imageView;
 
     @SuppressWarnings("FieldCanBeLocal") // keep reference to avoid GC ;)
-    private Pipeline pipeline;
+    private static Pipeline pipeline;
 
     public CameraStreamer() {
         imageView = new ImageView();
@@ -46,12 +47,6 @@ public class CameraStreamer extends Application {
         primaryStage.setScene(new Scene(grid, WINDOW_WIDTH, WINDOW_HEIGHT));
         primaryStage.setFullScreen(true);
         primaryStage.show();
-    }
-
-    @Override
-    public void stop() throws Exception {
-        pipeline.stop();
-        super.stop();
     }
 
     private void initPipeline() {
@@ -119,8 +114,23 @@ public class CameraStreamer extends Application {
     public static void main(String[] args) {
         String[] gstreamerArgs = new String[0];
         Gst.init("Streamer", gstreamerArgs);
-
+        Runtime.getRuntime().addShutdownHook(new Thread(CameraStreamer::shutdownPipeline));
         launch(args);
+    }
+
+    static void shutdownPipeline() {
+        System.out.println("Stop!");
+
+        pipeline.getSources().get(0).sendEvent(new EOSEvent());
+        try {
+            System.out.println("1 sec wait to flush out recording file.");
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.err.println("Something went terribly wrong!");
+        }
+        pipeline.stop();
+        Gst.deinit();
+        Gst.quit();
     }
 }
 

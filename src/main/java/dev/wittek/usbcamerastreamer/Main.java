@@ -16,6 +16,7 @@ public class Main {
 
     public static void main(final String[] args) {
         Gst.init("Streamer", args);
+        Runtime.getRuntime().addShutdownHook(new Thread(CameraStreamer::shutdownPipeline));
         Application.launch(CameraStreamer.class, args);
     }
 }
