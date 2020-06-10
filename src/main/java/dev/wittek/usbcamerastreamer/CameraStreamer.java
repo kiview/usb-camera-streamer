@@ -78,10 +78,16 @@ public class CameraStreamer extends Application {
 
         String transformations =
                 "! videobalance saturation=0.0 " +
-                "! videoflip method=horizontal-flip " +
-                "! timeoverlay halignment=center valignment=center " + // TODO: toggle by CLI flag
-                "! videobox top=200 bottom=200 left=355 right=355 " + // TODO: make configurable
+                "! videoflip method=horizontal-flip ";
+
+        if (getParameters().getNamed().containsKey("timeoverlay")) {
+            String timerOverlay = "! timeoverlay halignment=center valignment=center ";
+            transformations += timerOverlay;
+        }
+
+        transformations += "! videobox top=200 bottom=200 left=355 right=355 " + // TODO: make configurable
                 "! videoscale ";
+
         descriptionBuilder.append(transformations);
 
         if (getParameters().getNamed().containsKey("delay")) {

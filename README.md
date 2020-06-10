@@ -23,6 +23,8 @@ To build and run the program, execute:
 $ mvn javafx:run
 ```
 
+Note: JDK 13 and Maven need to be installed.
+
 ### Running the provided JAR
 
 ```
@@ -30,7 +32,14 @@ $ java -jar usb-camera-streamer.jar --delay=500
 ```
 
 
-Note: JDK 13 and Maven need to be installed.
+#### Parameters
+
+All parameters are optional have sensible defaults.
+
+| Parameter        | Explanation     | default      | Example  |
+| ------------- |:-------------:| -----:|
+| delay      | delay of the mirrior image in ms | 0 | --delay=500 |
+| timeoverlay      | whether to display the timeoverlay for debugging      | off | --timeoverlay=true (any value will activate) |
 
 ## Default Operation
 
