@@ -107,10 +107,10 @@ public class CameraStreamer extends Application {
         String cpuEncoding = "x264enc tune=zerolatency";
         String gpuNvidiaEncoding = "nvh264enc ! h264parse";
 
-        String recordingFileName = System.currentTimeMillis() + ".flv";
+        String recordingFileName = System.currentTimeMillis() + ".mp4";
         String fileSink =
                 "t. ! queue " +
-                "! videoconvert ! " + gpuNvidiaEncoding + " ! flvmux ! filesink location=" + recordingFileName;
+                "! videoconvert ! " + gpuNvidiaEncoding + " ! mp4mux ! filesink location=" + recordingFileName;
 
         descriptionBuilder.append(fileSink);
 
