@@ -44,6 +44,7 @@ public class CameraStreamer extends Application {
 
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(new Scene(grid, WINDOW_WIDTH, WINDOW_HEIGHT));
+        primaryStage.setFullScreen(true);
         primaryStage.show();
     }
 
