@@ -8,10 +8,6 @@
 
 This script was written for a [See3CAM_CU135](https://www.e-consystems.com/4k-usb-camera.asp#Key-features) USB camera but should work with other devices if configured according to their specs.
 
-## Scripts
-
-You can find bash and powershell scripts under `/scripts`. Those create a pipeline using OpenGL.
-
 ## JavaFX 
 
 ### Building & Running
@@ -26,6 +22,7 @@ $ mvn javafx:run
 Note: JDK 13 and Maven need to be installed.
 
 ### Running the provided JAR
+Simply grab the JAR from the GitHub release page.
 
 ```
 $ java -jar usb-camera-streamer.jar --delay=500
@@ -38,14 +35,26 @@ All parameters are optional have sensible defaults.
 
 | Parameter        | Explanation     | default      | Example  |
 | -------------    |:-------------:  | -----:       |     :-------------:      |
-| delay      | delay of the mirrior image in ms | 0 | --delay=500 |
+| delay      | delay of the mirror image in ms | 0 | --delay=500 |
 | timeoverlay      | whether to display the timeoverlay for debugging      | off | --timeoverlay=true (any value will activate) |
 
-## Default Operation
+## Support for NVIDIA GPU accelerated hardware encoding
+
+The encoding necessary for saving the video file will get a big performance and quality boost when using an NVIDIA GPU.
+For this to work, the `NVENC` gstreamer plugin needs to be installed. 
+This will probably mean downloading the NVIDIA SDK and compiling the plugin manually.
+There are detailed instructions on how to do it in [this great blog post](http://lifestyletransfer.com/how-to-install-nvidia-gstreamer-plugins-nvenc-nvdec-on-ubuntu/). 
+
+
+## Scripts (Deprecated)
+
+You can find bash and powershell scripts under `/scripts`. Those create a pipeline using OpenGL.
+
+### Default Operation
 
 As a default, the gstreamer pipeline will configure the `v4l2src` webcam sink to UYVY 1080P@60FPS (which requires a USB 3.0 connection).
 
-## Software Requirements
+### Software Requirements
 
 Tested on Ubuntu 18.04 and Fedora 31. In order to get a fullscreen rendered image on GNOME, install [Hide Top Bar Extension](https://extensions.gnome.org/extension/545/hide-top-bar/).
 
@@ -54,13 +63,6 @@ Tested on Ubuntu 18.04 and Fedora 31. In order to get a fullscreen rendered imag
 ```
 $ gst-inspect-1.0 glimagesink 
 ```
-
-## Support for NVIDIA GPU accelerated hardware encoding
-
-The encoding necessary for saving the video file will get a big performance and quality boost when using an NVIDIA GPU.
-For this to work, the `NVENC` gstreamer plugin needs to be installed. 
-This will probably mean downloading the NVIDIA SDK and compiling the plugin manually.
-There are detailed instructions on how to do it in [this great blog post](http://lifestyletransfer.com/how-to-install-nvidia-gstreamer-plugins-nvenc-nvdec-on-ubuntu/). 
 
 ## Appendix
 
