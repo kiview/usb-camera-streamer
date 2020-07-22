@@ -68,10 +68,12 @@ public class CameraStreamer extends Application {
     private String buildPipelineDescription() {
         StringBuilder descriptionBuilder = new StringBuilder();
 
+        String deviceId = getParameters().getNamed().getOrDefault("device", "0");
+
         String webcamSource =
-                "v4l2src device=/dev/video0 " + // TODO: Make video id configurable
+                "v4l2src device=/dev/video%s " +
                 "! video/x-raw, format=UYVY, width=%d, height=%d, framerate=%d/1 ";
-        descriptionBuilder.append(String.format(webcamSource, WINDOW_WIDTH, WINDOW_HEIGHT, WEBCAM_FRAME_RATE));
+        descriptionBuilder.append(String.format(webcamSource, deviceId, WINDOW_WIDTH, WINDOW_HEIGHT, WEBCAM_FRAME_RATE));
 
         String tee = "! tee name=t ! queue ";
         descriptionBuilder.append(tee);

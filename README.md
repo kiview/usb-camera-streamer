@@ -31,12 +31,13 @@ $ java -jar usb-camera-streamer.jar --delay=500
 
 #### Parameters
 
-All parameters are optional have sensible defaults.
+All parameters are optional and have sensible defaults.
 
 | Parameter        | Explanation     | default      | Example  |
 | -------------    |:-------------:  | -----:       |     :-------------:      |
 | delay      | delay of the mirror image in ms | 0 | --delay=500 |
 | timeoverlay      | whether to display the timeoverlay for debugging      | off | --timeoverlay=true (any value will activate) |
+| device      | video capture device id as reported by the kernel (`ls -ltrh`) | 0 | --device=2 |
 
 ## Support for NVIDIA GPU accelerated hardware encoding
 
