@@ -111,7 +111,7 @@ public class CameraStreamer extends Application {
 
         String recordingFileName = System.currentTimeMillis() + ".mp4";
         String fileSink =
-                "t. ! queue " +
+                "t. ! queue leaky=downstream " +
                 "! videoconvert ! " + gpuNvidiaEncoding + " ! mp4mux ! filesink location=" + recordingFileName;
 
         descriptionBuilder.append(fileSink);
